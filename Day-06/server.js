@@ -3,7 +3,7 @@ const app = require("./src/app")
 const mongoose = require('mongoose')
 
 function connectToDb(){
-    mongoose.connect("mongodb+srv://rishabh007:rix%402007@cluster0.ixkor3p.mongodb.net/day-06?appName=Cluster0")
+    mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
         console.log("connected to database");
         
