@@ -1,10 +1,12 @@
 const express = require('express')
 const noteModel = require('./models/note.model')
+const cors = require('cors')
 
 const app = express()
 
 //middleware
 app.use(express.json())
+app.use(cors())
 
 // creating notes API 
 app.post('/api/notes',async (req,res)=>{
@@ -36,7 +38,7 @@ app.delete('/api/notes/:id',async (req,res)=>{
     const id = req.params.id
     await noteModel.findByIdAndDelete(id)
 
-    res.status(200).json({
+    res.status(200).json({ 
         message: "Note deleted successfully"
     })
 })
