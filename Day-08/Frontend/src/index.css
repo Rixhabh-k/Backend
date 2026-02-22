@@ -18,6 +18,7 @@ body{
   display: flex;
   gap: 10px;
   padding-block: 1rem;
+  padding-inline: 1rem;
   flex-wrap: wrap;
 }
 
@@ -27,4 +28,25 @@ body{
   border-radius: 0.7rem;
   max-width: 20rem;
   color: white;
+}
+
+form{
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  padding-block: 1rem;
+  padding-inline: 1rem;
+}
+
+form input{
+  padding: 10px;
+  border: none;
+  outline: 1px solid black;
+}
+
+form button{
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background: lightseagreen;
 }
