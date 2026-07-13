@@ -1,36 +1,44 @@
-const express = require("express")
+const express = require('express')
 
 const app = express()
 
 //middleware
 app.use(express.json())
 
+
 const notes = []
 
-// post API
-app.post("/notes",(req,res)=>{
+//create notes api
+app.post("/create-note",(req,res)=>{
     notes.push(req.body)
-    res.send("notes created")
+    res.status(201).json({
+        message: "note created"
+    })
 })
 
-//get API
-app.get("/get-notes",(req,res)=>{
-    console.log(notes)
-    res.send(notes)
+//get notes api
+app.get("/fetch-note",(req,res)=>{
+    res.status(200).json({
+        message: "notes fetched successfully",
+        notes 
+    })
 })
 
-//delete API
-app.delete("/delete-note/:index",(req,res)=>{
-    console.log(req.params);
-    delete notes[req.params.index]
-    res.send(`note deleted`)
+//Delete note api
+app.delete("/delete-note/:id",(req,res)=>{
+    delete notes[req.params.id]
+    res.status(200).json({
+        message: "Note Deleted"
+    })
 })
 
-//updating note API
-app.patch("/update-note/:index",(req,res)=>{
-    notes[req.params.index].description = req.body.description
-    res.send("note updated successfully")
+//Update note api
+app.patch('/update-note/:id',(req,res)=>{
+    notes[req.params.id].description = req.body
+    res.status(200).json({
+        message: "Note updated successfully",
+        notes
+    })
 })
-
 
 module.exports = app
