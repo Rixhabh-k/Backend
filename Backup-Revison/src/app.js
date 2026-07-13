@@ -1,44 +1,56 @@
 const express = require('express')
+const noteModel = require('./model/notes.model')
 
 const app = express()
 
 //middleware
 app.use(express.json())
 
+//create note api
+app.post("/create-note",async (req,res)=>{
+    const {title,description} = req.body
 
-const notes = []
+    const note = await noteModel.create({
+        title,description
+    })
 
-//create notes api
-app.post("/create-note",(req,res)=>{
-    notes.push(req.body)
     res.status(201).json({
-        message: "note created"
+        message: "note created and saved to DB",
+        note
     })
 })
 
-//get notes api
-app.get("/fetch-note",(req,res)=>{
+//get note api 
+app.get('/get-note',async(req,res)=>{
+    const note = await noteModel.find()
+
     res.status(200).json({
-        message: "notes fetched successfully",
-        notes 
+        message: "notes fetched",
+        note
     })
 })
 
-//Delete note api
-app.delete("/delete-note/:id",(req,res)=>{
-    delete notes[req.params.id]
+// delete api
+app.delete("/delete-note/:id",async(req,res)=>{
+    const id = req.params.id
+    await noteModel.findByIdAndDelete(id)
+
     res.status(200).json({
-        message: "Note Deleted"
+        message: "note deleted"
     })
 })
 
-//Update note api
-app.patch('/update-note/:id',(req,res)=>{
-    notes[req.params.id].description = req.body
+//note update api
+app.patch("/update-note/:id",async(req,res)=>{
+    const id = req.params.id
+    const {title} = req.body
+
+    await noteModel.findByIdAndUpdate(id,{title})
+
     res.status(200).json({
-        message: "Note updated successfully",
-        notes
+        message: "note updated"
     })
 })
+
 
 module.exports = app
