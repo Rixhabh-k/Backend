@@ -50,9 +50,14 @@ const App = () => {
           formHandler(e);
         }}
       >
-        <input type="text" placeholder="Title" name="title" value={title} 
-        onChange={(e)=>{
-          setTitle(e.target.value)
+        <input
+          
+          type="text" 
+          placeholder="Title" 
+          name="title" 
+          value={title} 
+          onChange={(e)=>{
+            setTitle(e.target.value)
         }} />
         <input type="text" placeholder="Description" name="description" value={description} onChange={(e)=>{
           setDescription(e.target.value)
