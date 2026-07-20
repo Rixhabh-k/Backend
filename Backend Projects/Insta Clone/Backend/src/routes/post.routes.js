@@ -7,6 +7,6 @@ const upload = multer({storage:multer.memoryStorage()})
 
 
 //apis
-postRouter.post("/",upload.single("image"),postController.createPostController)
+postRouter.post("/",upload.single("image"),postController.createPostController) 
 
 module.exports = postRouter
