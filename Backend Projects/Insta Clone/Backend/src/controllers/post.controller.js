@@ -46,6 +46,86 @@ const createPostController = async (req, res) => {
   });
 };
 
+const getPostController = async (req,res)=>{
+  const token = req.cookies.token
+
+  if(!token){
+    return res.status(404).json({
+      message: "token not found"
+    })
+  }
+
+  let decode;
+
+  try{
+    decode = await jwt.verify(token, process.env.JWT_SECRET)
+  } catch(err){
+    return res.status(401).json({
+      message: "user is unauthorized"
+    })
+  }
+
+  const userId = decode.id
+
+  const post = await postModel.find({
+    user: userId
+  })
+
+  res.status(201).json({
+    message: "post fetched successfully",
+    post
+  })
+
+
+}
+
+const getPostDetailsController = async (req,res)=>{
+  const token = req.cookies.token
+
+  if(!token){
+    return res.status(404).json({
+      message: "token not found"
+    })
+  }
+
+  let decode;
+
+  try{
+    decode = await jwt.verify(token,process.env.JWT_SECRET)
+  } catch(err){
+    return res.status(401).json({
+      message: "user is unauthorized"
+    })
+  }
+
+  const userId = decode.id
+  const postId = req.params.postId
+
+  const post = await postModel.findById(postId)
+
+  if(!post){
+    return res.status(404).json({
+      message: "post not found"
+    })
+  }
+
+  const isValidUser = post.user.toString() === userId
+
+  if(!isValidUser){
+    return res.status(409).json({
+      message: "forbidden"
+    })
+  }
+
+  res.status(201).json({
+    message: "post details",
+    post
+  })
+
+}
+
 module.exports = {
   createPostController,
+  getPostController,
+  getPostDetailsController
 };
