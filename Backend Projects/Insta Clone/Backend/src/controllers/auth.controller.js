@@ -31,7 +31,7 @@ const registerController= async(req, res)=>{
     profile_Image,
   });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id: user._id,username: user.username }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 
@@ -74,7 +74,7 @@ const loginController = async (req, res)=>{
     })
   }
 
-  const freshToken = jwt.sign({id: user._id},process.env.JWT_SECRET,{expiresIn:"1d"})
+  const freshToken = jwt.sign({id: user._id,username: user.username},process.env.JWT_SECRET,{expiresIn:"1d"})
 
   res.cookie("token",freshToken)
 

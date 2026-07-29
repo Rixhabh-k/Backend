@@ -11,5 +11,6 @@ const verifyUser = require("../middlewares/auth.middleware")
 postRouter.post("/",upload.single("image"),verifyUser,postController.createPostController) 
 postRouter.get("/",verifyUser,postController.getPostController) 
 postRouter.get("/details/:postId",verifyUser,postController.getPostDetailsController) 
+postRouter.post("/like/:postId",verifyUser,postController.likePostController) 
 
 module.exports = postRouter

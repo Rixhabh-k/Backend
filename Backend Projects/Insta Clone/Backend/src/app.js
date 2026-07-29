@@ -1,8 +1,14 @@
 const express = require("express")
-const authRouter = require("./routes/auth.routes")
-const postRouter = require("./routes/post.routes")
 const cookieParser = require("cookie-parser")
 
+/** 
+    *
+    *@description: here we are importing routes
+    *
+*/
+const authRouter = require("./routes/auth.routes")
+const postRouter = require("./routes/post.routes")
+const followRouter = require("./routes/follow.routes")
 
 const app = express()
 
@@ -14,5 +20,6 @@ app.use(cookieParser())
 app.use("/api/auth",authRouter)
 app.use("/api/auth",authRouter)
 app.use("/api/posts",postRouter)
+app.use("/api/users",followRouter)
 
 module.exports = app
